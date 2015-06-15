@@ -8,3 +8,6 @@ section > div 			{ padding: 20px; }
 header, nav, section 	{ background: #eee; text-align: center; }
 footer					{ background: #eee; text-align: center; }
 nav span				{ margin: 0px 10px 0px 10px; }
+
+#autor	> p				{ margin: 0.6em auto 0.6em auto; text-align: center;}
+
