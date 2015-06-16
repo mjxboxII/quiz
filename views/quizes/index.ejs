@@ -1,9 +1,18 @@
-<table>
+<table width="100%" align="center">
+<% if (quizes.length==0) {%>
+	<tr style="text-align:center">
+		<td>
+			<br><br>
+			<p>No hay preguntas que coincidan con el criterio de búsqueda</p><br>
+			<a href="/search">Volver</a>
+		</td>
+	</tr>
+<%} else {%>
 <% var i; for (i=0; i<quizes.length; i++){ %>
 	<tr style="text-align:left">
 		<td>
 			<a href="quizes/<%= quizes[i].id %>"><%= quizes[i].pregunta %></a>
 		</td>
 	</tr>
-<%} %>
+<%}; } %>
 </table>

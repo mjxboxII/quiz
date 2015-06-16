@@ -23,13 +23,17 @@ exports.load = function (req, res, next, quizId) {
 };
 
 //GET /quizes ** modulo 7
+//GET /quizes?search ** modulo 7
 exports.index= function(req, res){
-	models.Quiz.findAll().then(function(quizes){
+	var cadena = req.query.search.replace(/[ ]+/g,"%");
+	cadena = "%" + cadena + "%";
+
+	models.Quiz.findAll({where: ["pregunta like ?", cadena], order: "pregunta ASC"}).then(function(quizes){
 		res.render('quizes/index.ejs', { quizes: quizes });
 	}
 	).catch (function(error) { next(error); });
 
-};
+}; 
 
 //GET /quizes/:id ** modulo 7
 exports.show = function(req,res){
