@@ -9,23 +9,36 @@ exports.question=function(req,res){
 	})	
 };
 ***************************/
-//GET /quizes
+//Autoload ** modulo 7
+exports.load = function (req, res, next, quizId) {
+	// body...
+	models.Quiz.find(quizId).then(
+		function(quiz){
+			if (quiz) {
+				req.quiz = quiz;
+				next();
+			} else { next(new Error('No existe quizId=' + quizId));	}
+		}
+		).catch(function (error) { next(error); });
+};
+
+//GET /quizes ** modulo 7
 exports.index= function(req, res){
 	models.Quiz.findAll().then(function(quizes){
 		res.render('quizes/index.ejs', { quizes: quizes });
-	})
+	}
+	).catch (function(error) { next(error); });
 
 };
 
-//GET /quizes/:id
+//GET /quizes/:id ** modulo 7
 exports.show = function(req,res){
-	models.Quiz.find(req.params.quizId).then(function(quiz){
-			res.render('quizes/show', { quiz: quiz });
-	})	
+	res.render('quizes/show', { quiz: req.quiz });	
 }; 
 
-//GET /quizes/answer
+//GET /quizes/:id/answer
 exports.answer=function(req,res){
+	var resultado = 'Incorrecto';
 
 	var _miresp = req.query.respuesta.replace(/[ ]+/g," ");
 		_miresp = _miresp.replace(/^[ ]+/g,'');
@@ -33,11 +46,9 @@ exports.answer=function(req,res){
 
 	_miresp = _miresp.charAt(0).toUpperCase()+_miresp.slice(1);
 	
-	models.Quiz.find(req.params.quizId).then(function(quiz){
-		if (_miresp===quiz.respuesta){
-			res.render('quizes/answer', {quiz: quiz, respuesta: 'Correcto'});
-		} else {
-			res.render('quizes/answer', {quiz:quiz, respuesta: 'Incorrecto'});
+	if (_miresp===req.quiz.respuesta){
+		
+			resultado= 'Correcto';
 		}
-	})
-};
+		res.render('quizes/answer', { quiz: req.quiz, respuesta: resultado });
+};	
