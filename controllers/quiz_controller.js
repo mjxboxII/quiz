@@ -91,3 +91,31 @@ exports.create = function(req, res){
 	}
 
 };
+
+//GET /quizes/:id/edit
+// *** modulo 8
+exports.edit=function(req,res){
+	var quiz = req.quiz; //autoload de instancia de quiz
+
+	res.render('quizes/edit', { quiz: quiz, errors : []});
+
+};
+
+//PUT /quizes/:id
+exports.update = function(req, res){
+	req.quiz.pregunta = req.body.quiz.pregunta;
+	req.quiz.respuesta = req.body.quiz.respuesta;
+
+	var errors = req.quiz.validate();
+	if (errors) {
+		// comentado en foro
+		var i=0; var errores=new Array();  //se convierte en [] con la propiedad message por compatibilida con layout
+        for (var prop in errors) errores[i++]={message: errors[prop]}; 
+		res.render('quizes/edit', {quiz: req.quiz, errors: errores});
+	} else {
+			//guarda en DB los campos pregunta y respuesta de quiz
+		req.quiz.save({fields: ["pregunta", "respuesta"]}).then(function(){
+		res.redirect('/quizes')}) //Redireccion HTTP (URL relativo) lista de preguntas
+	}
+
+};

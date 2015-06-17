@@ -5,6 +5,8 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var partials = require('express-partials');
+//*** modulo 8
+var methodOverride = require('method-override');
 
 var routes = require('./routes/index');
 
@@ -22,6 +24,9 @@ app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(partials());
+
+//** modulo 8
+app.use(methodOverride('_method'));
 
 app.use('/', routes);
 
