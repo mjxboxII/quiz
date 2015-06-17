@@ -25,9 +25,18 @@
       <br><br>
       <span><a href="/author">Créditos</a></span>
     </nav>
-
+    
     <section class="main" id="s1" style="overflow:scroll">
-      <%- body %>
+      <% if (errors.length) { %>
+          <span id="ErrorMsg">
+            Corregir errores: <br/>
+            <% for (var i in errors) { %>
+              <span><%= errors[i].message %></span><br/>
+             <% } %>   
+          </span>
+      <% } %>
+
+      <div><%- body %></div>
     </section>
 
     <footer class="main" id="f1">
