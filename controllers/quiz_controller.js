@@ -26,8 +26,7 @@ exports.load = function (req, res, next, quizId) {
 exports.index= function(req, res){
 
 	if (req.query.orige==1) { //Viene de busqueda
-				var cadena = req.query.search.replace(/[ ]+/g,"%");
-				cadena = "%" + cadena + "%";
+				var cadena = "%" + req.query.search.replace(/[ ]+/g,"%") + "%";
 
 				models.Quiz.findAll({where: ["pregunta like ?", cadena], order: "pregunta ASC"}).then(function(quizes){
 					res.render('quizes/index', { quizes:quizes , orige : 1, errors: [] });

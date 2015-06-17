@@ -27,8 +27,11 @@ router.get('/author', function(req, res) {
   res.render('author', {errors: []});
 });
 
+//** mejoras pantalla busquedas
+/******************************
 router.get('/search', function(req, res) {
   res.render('./quizes/search', {errors: []});
 });
+******************************/
 
 module.exports = router;

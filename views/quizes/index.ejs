@@ -1,10 +1,10 @@
+<% include search.ejs %><br>
 <table width="100%" align="center">
 <% if (quizes.length==0 && orige==1) {%>
 	<tr style="text-align:center">
 		<td>
-			<br><br/>
 			<p>No hay preguntas que coincidan con el criterio de búsqueda</p><br/>
-			<a href="/search">Volver</a>
+			<a href="/quizes">Volver</a>
 		</td>
 	</tr>
 <%} else {%>
@@ -24,4 +24,4 @@
 	</tr>
 <%}; } %>
 </table>
-<a href="/quizes/new"><button type="button">Crear pregunta</button></a>
+<br/><a href="/quizes/new"><button type="button">Crear pregunta</button></a>
