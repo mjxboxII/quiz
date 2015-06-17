@@ -1,5 +1,5 @@
 <table width="100%" align="center">
-<% if (quizes.length==0) {%>
+<% if (quizes.length==0 && orige==1) {%>
 	<tr style="text-align:center">
 		<td>
 			<br><br>
@@ -16,3 +16,4 @@
 	</tr>
 <%}; } %>
 </table>
+<a href="/quizes/new"><button type="button">Crear pregunta</button></a>
