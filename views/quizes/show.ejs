@@ -1,6 +1,41 @@
-<form method="get" action="/quizes/<%= quiz.id %>/answer">
-	Temática: <%= quiz.tematica %> <p><br>
-	Pregunta: <%= quiz.pregunta %> <p><br>
-	<input type="text" name="respuesta" value="Responda aquí" style="text-transform: capitalize" onfocus="this.value=''"/>
-	<input type="submit" value="Enviar" />
+<form  method="get" action="/quizes/<%= quiz.id %>/answer">
+<table>
+	<tr style="text-align:left">
+		<td><strong>Temática: </strong></td>
+		<td><%= quiz.tematica %></td>
+	</tr>
+	<tr style="text-align:left">
+		<td><strong>Pregunta: </strong></td>
+		<td style="text-align:left"><%= quiz.pregunta %></td>
+	</tr>
+	<tr style="text-align:left">
+		<td></td>
+		<td><input type="text" name="respuesta" value="Responda aquí" style="text-transform: capitalize" onfocus="this.value=''"/></td> 
+		<td><input type="submit" value="Enviar" /></td>
+	</tr>
+</table>
 </form>
+<table>
+	<tr>
+		<td><a href="/quizes/<%= quiz.id %>/comments/new"><button>Añadir Comentario</button></a></td>
+	</tr>
+</table>
+
+<table width="100%" class="tab1">
+		<tr></tr>
+		<tr >	
+			<td class="tabR1" colspan="2"><strong>COMENTARIOS: </strong></td>
+		</tr>
+		<tr>
+			<td class="tabR1">
+				<ul id="lis1"><%for(index in quiz.comments) {%>
+					<li><strong></strong><%=quiz.comments[index].texto%></li>
+					<%}%>
+				</ul>
+			</td>
+		</tr>
+</table>
+	
+
+
+

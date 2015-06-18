@@ -3,6 +3,8 @@ var router = express.Router();
 
 //paso4: primera pagina
 var quizController = require('../controllers/quiz_controller');
+//*** modulo 9
+var commentController = require('../controllers/comment_controller');
 
 /* GET home page. */
 router.get('/', function(req, res) {
@@ -22,6 +24,9 @@ router.post('/quizes/create', 				quizController.create);
 router.get('/quizes/:quizId(\\d+)/edit', 	quizController.edit);
 router.put('/quizes/:quizId(\\d+)', 		quizController.update);
 router.delete('/quizes/:quizId(\\d+)', 		quizController.destroy);
+//*** mod 9
+router.get('/quizes/:quizId(\\d+)/comments/new', commentController.new);
+router.post('/quizes/:quizId(\\d+)/comments', 	commentController.create);
 
 router.get('/author', function(req, res) {
   res.render('author', {errors: []});
