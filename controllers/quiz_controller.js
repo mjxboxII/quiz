@@ -26,12 +26,19 @@ exports.load = function (req, res, next, quizId) {
 exports.index= function(req, res){
 
 	if (req.query.orige==1) { //Viene de busqueda
-				var cadena = "%" + req.query.search.replace(/[ ]+/g,"%") + "%";
+			if(req.query.b_opt=="preg"){ //busqueda por preg	
+				var cadena = "%" + req.query.search1.replace(/[ ]+/g,"%") + "%";
 
 				models.Quiz.findAll({where: ["pregunta like ?", cadena], order: "pregunta ASC"}).then(function(quizes){
 					res.render('quizes/index', { quizes:quizes , orige : 1, errors: [] });
 				}
 				).catch (function(error) { next(error); });
+			} else { //busqueda por tema
+				models.Quiz.findAll({where: ["tematica = ?", req.query.search2], order: "pregunta ASC"}).then(function(quizes){
+					res.render('quizes/index', { quizes:quizes , orige : 1, errors: [] });
+				}
+				).catch (function(error) { next(error); });
+			};
 	}
 	else {
 			models.Quiz.findAll().then(function(quizes){
@@ -67,9 +74,9 @@ exports.answer=function(req,res){
 //GET /quizes/new
 exports.new = function(req, res){
 	var quiz = models.Quiz.build(
-			{pregunta: "Pregunta", respuesta: "Respuesta"}
+			{pregunta: "Pregunta", respuesta: "Respuesta", tematica: "Temática"}
 		);
-	res.render('quizes/new', { quiz: quiz, errors: [] });
+	res.render('quizes/new', { quiz: quiz, errors: [], proc:0});
 };
 
 //*** modulo 8
@@ -82,10 +89,10 @@ exports.create = function(req, res){
 		// comentado en foro
 		var i=0; var errores=new Array();  //se convierte en [] con la propiedad message por compatibilida con layout
         for (var prop in errors) errores[i++]={message: errors[prop]}; 
-		res.render('quizes/new', {quiz: quiz, errors: errores});
+		res.render('quizes/new', {quiz: quiz, errors: errores, proc:0});
 	} else {
 			//guarda en DB los campos pregunta y respuesta de quiz
-		quiz.save({fields: ["pregunta", "respuesta"]}).then(function(){
+		quiz.save({fields: ["pregunta", "respuesta", "tematica"]}).then(function(){
 		res.redirect('/quizes')}) //Redireccion HTTP (URL relativo) lista de preguntas
 	}
 
@@ -96,7 +103,7 @@ exports.create = function(req, res){
 exports.edit=function(req,res){
 	var quiz = req.quiz; //autoload de instancia de quiz
 
-	res.render('quizes/edit', { quiz: quiz, errors : []});
+	res.render('quizes/edit', { quiz: quiz, errors : [], proc:1});
 
 };
 
@@ -104,16 +111,17 @@ exports.edit=function(req,res){
 exports.update = function(req, res){
 	req.quiz.pregunta = req.body.quiz.pregunta;
 	req.quiz.respuesta = req.body.quiz.respuesta;
+	req.quiz.tematica = req.body.quiz.tematica;
 
 	var errors = req.quiz.validate();
 	if (errors) {
 		// comentado en foro
 		var i=0; var errores=new Array();  //se convierte en [] con la propiedad message por compatibilida con layout
         for (var prop in errors) errores[i++]={message: errors[prop]}; 
-		res.render('quizes/edit', {quiz: req.quiz, errors: errores});
+		res.render('quizes/edit', {quiz: req.quiz, errors: errores, proc:1});
 	} else {
 			//guarda en DB los campos pregunta y respuesta de quiz
-		req.quiz.save({fields: ["pregunta", "respuesta"]}).then(function(){
+		req.quiz.save({fields: ["pregunta", "respuesta", "tematica"]}).then(function(){
 		res.redirect('/quizes')}) //Redireccion HTTP (URL relativo) lista de preguntas
 	}
 };

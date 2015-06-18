@@ -3,7 +3,7 @@
 <% if (quizes.length==0 && orige==1) {%>
 	<tr style="text-align:center">
 		<td>
-			<p>No hay preguntas que coincidan con el criterio de búsqueda</p><br/>
+			<p>No hay resultados que coincidan con el criterio de búsqueda</p><br/>
 			<a href="/quizes">Volver</a>
 		</td>
 	</tr>
@@ -12,6 +12,9 @@
 	<tr style="text-align:left">
 		<td>
 			<a href="quizes/<%= quizes[i].id %>"><%= quizes[i].pregunta %></a>
+		</td>
+		<td>
+			<%= quizes[i].tematica %>
 		</td>
 		<td>
 			<a href="quizes/<%= quizes[i].id %>/edit"><button>Editar</button></a>

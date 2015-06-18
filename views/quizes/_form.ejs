@@ -1,8 +1,58 @@
-<label style="text-align:left" for="preg" class="rem">Pregunta: </label>
-<input type="text" id="preg" name="quiz[pregunta]" value="<% quiz.pregunta %>"/><p>
-<br> 
-<label style="text-align:left" for="resp" class="rem">Respuesta: </label>
-<input type="text" id="resp" name="quiz[respuesta]" value="<% quiz.respuesta %>"/><p><br> 
-<a href="/quizes"><button type="button">Cancelar</button></a>
+<script type="text/javascript">
+ function showval(p_val){
+   document.getElementById("tema").value=p_val;
+ }
+</script>
+<style type="text/css">
+.no{
+display:none;
+}
+.si{
+display:block;
+}
+</style>
+<table>
+<tr>
+	<td style="text-align:left"><label for="preg" class="rem">Pregunta: </label></td>
+	<td style="text-align:left"><input type="text" id="preg" name="quiz[pregunta]" value="<%= quiz.pregunta %>" overflow:auto"/></td>
+</tr>
+<tr> 
+	<td style="text-align:left"><label for="resp" class="rem">Respuesta: </label></td>
+	<td style="text-align:left"><input type="text" id="resp" name="quiz[respuesta]" value="<%= quiz.respuesta %>" overflow:auto"/></td>
+</tr>
+<tr> 
+	<td style="text-align:left"><label for="tema" class="rem">Temática: </label></td>
+	
+		<% if (proc==0) {%>
+			<td style="text-align:left">
+			<select name="quiz[tematica]" value="<%= quiz.tematica %>" >
+		          <option value="Otro" selected>Otro</option>
+		          <option value="Humanidades">Humanidades</option>
+		          <option value="Ocio">Ocio</option>
+		          <option value="Ciencia">Ciencia</option>
+		          <option value="Tecnologia">Tecnología</option>
+		    </select></td>
+		<%} else {%> 
+				<td style="text-align:left"><input type="text" id="tema" name="quiz[tematica]" value="<%= quiz.tematica %>" style="background-color:#D0D0D0" readonly/>
+		        <input type = "radio" name="opt" value="tema" onclick="javascript:boxlist.className='si';" />Modificar Temática </td>
+</tr/
+<tr>
+		         <td></td>
+		         <td align="left" >
+		            <div id="boxlist" class="no">
+		                <p ><select name="lista" onclick="showval(this.value)">
+	                      <option value="Otro" selected>Otro</option>
+	                      <option value="Humanidades">Humanidades</option>
+	                      <option value="Ocio">Ocio</option>
+	                      <option value="Ciencia">Ciencia</option>
+	                      <option value="Tecnologia">Tecnología</option>
+		                </select></p>
+		            </div></td>
+		<%} %>
+</tr>
+<tr>
+ <td></td>
+ <td style="text-align:left"><a href="/quizes"><button type="button">Cancelar</button></a> <input type="submit" value="Salvar"></td>
+</tr>
+</table>
 <input type="hidden" name="orige" value="0">
-<input type="submit" value="Salvar">

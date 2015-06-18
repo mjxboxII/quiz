@@ -1,12 +1,45 @@
 <!DOCTYPE html>
 <html>
   <body>
-    <form method="get" action="/quizes">
-    	<input type="hidden" name="orige" value="1">
-    	<p style="text-align:center"><strong>:..Búsqueda de preguntas..:</strong></p>
-    	<p><input type="text" name="search" value="Cadena a buscar" onfocus="this.value=''" />
-    	<input type="submit" value="Enviar"></p>
+      <style type="text/css">
+      .no{
+        display:none;
+      }
+      .si{
+        display:block;
+      }
+      </style>
+      <p><strong>·· BUSQUEDA DE PREGUNTAS. Seleccione una opción: ··</strong></p>
+      <form method="get" action="/quizes">
+      <input type="hidden" name="orige" value="1">
+      <table width="100%" align="center">
+        <tr>
+          <td align="left">
+              <input type="radio" name="b_opt" id="opt1" value="preg" onclick="javascript:boxchar.className='si';
+              javascript:boxlist.className='no';" />Por pregunta </td>
+          <td align="left">
+            <div id="boxchar" class="no">
+                <p><input type="text" name="search1" value="Cadena a buscar" onfocus="this.value=''" /> <input type="submit" value="Enviar"></p>
+            </div>
+          </td>
+        </tr>
+        <tr>  
+          <td align="left">
+              <input type = "radio" name="b_opt" id="opt2" value="tema"onclick="javascript:boxlist.className='si';
+              javascript:boxchar.className='no';" />Por temática </td>
+          <td align="left" >
+            <div id="boxlist" class="no">
+                <p ><select name="search2">
+                      <option value="Otro" selected>Otro</option>
+                      <option value="Humanidades">Humanidades</option>
+                      <option value="Ocio">Ocio</option>
+                      <option value="Ciencia">Ciencia</option>
+                      <option value="Tecnologia">Tecnología</option>
+                </select> <input type="submit" value="Enviar"></p>
+            </div>
+          </td>
+        </tr>   
+      </table>
     </form>
-    <p></p>
   </body>
 </html>
