@@ -28,9 +28,16 @@
 		</tr>
 		<tr>
 			<td class="tabR1">
-				<ul id="lis1"><%for(index in quiz.comments) {%>
-					<li><strong></strong><%=quiz.comments[index].texto%></li>
-					<%}%>
+				<ul id="lis1">
+				<%for(index in quiz.comments) {%>
+					<%if (quiz.comments[index].publicado || session.user) {%>
+							<li><strong></strong><%=quiz.comments[index].texto%> 
+								<%if (session.user && !quiz.comments[index].publicado){%>
+									<a href="/quizes/<%=quiz.id%>/comments/<%=quiz.comments[index].id%>/publish"><button>Publicar</button></a>
+								<%} %>	
+							</li>
+						<%}%>
+				<%}%>
 				</ul>
 			</td>
 		</tr>

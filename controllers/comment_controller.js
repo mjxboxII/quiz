@@ -1,6 +1,17 @@
 //Importar modelo para acceder a la BBDD
 var models = require('../models/models.js');
 
+//Autoload :id de comentarios
+exports.load = function(req, res, next, commentId){
+	models.Comment.find({where: { id : Number(commentId) }}).then(
+		function(comment){
+			if (comment){
+				req.comment = comment; next();
+			} else { next(new Error('No existe commentId=' +commentId)) }	
+		}
+		).catch(function(error){next()});
+};
+
 //*** modulo 9
 //GET /quizes/:quizId/comments/new
 exports.new = function(req, res){
@@ -28,4 +39,11 @@ exports.create = function(req, res){
 		res.redirect('/quizes/' + req.params.quizId)}) //Redireccion HTTP (URL relativo) lista de preguntas
 	}
 
+};
+
+exports.publish = function(req, res) {
+	req.comment.publicado = true;
+	req.comment.save({fields: ['publicado']}).then(
+			function(){ res.redirect('/quizes/'+req.params.quizId);}
+		).catch( function(error){ next(error)});
 };
