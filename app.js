@@ -31,6 +31,28 @@ app.use(methodOverride('_method'));
 app.use(cookieParser()); //semilla para cifrar cookie
 app.use(session({ secret: 'mysecret'}));
 
+//MW auto-logout *** modulo 9
+app.use(function(req, res, next) {
+
+    //calcular tiempo de inactividad con sesion activa
+    if (req.session.user){
+       //console.log('Usuario registrado en session @: '+ req.session.user.doTime + 'seg.');
+
+        var sleeptime = new Date();
+        var timeinact = ((sleeptime.getMinutes()*60) + sleeptime.getSeconds()) - req.session.user.doTime;
+
+        if (timeinact > 120) {  //2 min. de inactividad
+            //console.log('TIMEOUT: Usuario inactivo: '+ timeinact + 'seg.');
+            delete req.session.user;
+
+        } else { //Si no se ha excedido, se actualiza/resetea
+            //console.log('Usuario inactivo: '+ timeinact + 'seg.');
+            req.session.user.doTime = (sleeptime.getMinutes()*60) + sleeptime.getSeconds();
+        }    
+    }
+    next();
+});
+
 //Helpers dinamicos: ***modulo 9
 app.use(function(req, res, next){
 
