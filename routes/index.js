@@ -5,6 +5,8 @@ var router = express.Router();
 var quizController = require('../controllers/quiz_controller');
 //*** modulo 9
 var commentController = require('../controllers/comment_controller');
+//*** modulo 9
+var sessionController = require('../controllers/session_controller');
 
 /* GET home page. */
 router.get('/', function(req, res) {
@@ -27,16 +29,15 @@ router.delete('/quizes/:quizId(\\d+)', 		quizController.destroy);
 //*** mod 9
 router.get('/quizes/:quizId(\\d+)/comments/new', commentController.new);
 router.post('/quizes/:quizId(\\d+)/comments', 	commentController.create);
+//Definicion de rutas de sesion *** modulo 9
+router.get('/login',					sessionController.new); //formulario login
+router.post('/login', 					sessionController.create); //crear sesion
+router.get('/logout',					sessionController.destroy); //destruir sesion ->>DEBERÍA ser DELETE
+
 
 router.get('/author', function(req, res) {
   res.render('author', {errors: []});
 });
 
-//** mejoras pantalla busquedas
-/******************************
-router.get('/search', function(req, res) {
-  res.render('./quizes/search', {errors: []});
-});
-******************************/
 
 module.exports = router;

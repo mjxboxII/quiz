@@ -7,7 +7,8 @@ var bodyParser = require('body-parser');
 var partials = require('express-partials');
 //*** modulo 8
 var methodOverride = require('method-override');
-
+//*** modulo 9
+var session = require('express-session');
 var routes = require('./routes/index');
 
 var app = express();
@@ -21,12 +22,30 @@ app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
-app.use(cookieParser());
+//app.use(cookieParser('my2015'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(partials());
-
 //** modulo 8
 app.use(methodOverride('_method'));
+//*** mod 9
+app.use(cookieParser()); //semilla para cifrar cookie
+app.use(session({ secret: 'mysecret'}));
+
+//Helpers dinamicos: ***modulo 9
+app.use(function(req, res, next){
+
+  // si no existe lo inicializa
+    if (!req.session.redir) {
+        req.session.redir = '/';
+     }
+
+    if (!req.path.match(/\/login|\/logout|\/user/)){
+        req.session.redir = req.path;
+    }
+    //Hacer visible req.session en las vistas
+    res.locals.session = req.session;
+    next();
+});
 
 app.use('/', routes);
 
