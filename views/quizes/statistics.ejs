@@ -1,0 +1,103 @@
+  <body onload="draw(<%= datos.np%>, <%=datos.nc%>, <%=datos.avg%>, <%=datos.pcc%>, <%=datos.psc%>)">
+  <script type="text/javascript">
+    
+   var dataName = [ "nºPreg", "nºComen", "Com/Preg", "PregCC*", "PregSC" ];
+  
+ //** funcion para dibujar un gráfico  
+ function draw(p_v1, p_v2, p_v3, p_v4, p_v5) {
+	
+
+	var dataValue = [p_v1, p_v2, p_v3, p_v4, p_v5] 	//Array de valores
+	var noBars = dataValue.length; 	   				//Número de barras a representar
+	var gAreaHeight = canId.height - 30; 			// Área para el gráfico dentro del canvas con 
+									   				// margen para etiquetas en X
+	var gAreaWidth = canId.width;   				//Área para el gráfico dentro del canvas
+	var margin = 10;
+	var border = 2;
+	canId = document.getElementById("canId");
+	graph = canId.getContext("2d");
+	
+	//Dimensiones de las barras
+	var barWidth = (gAreaWidth / noBars) - margin * 2;
+	var maxBarHeight = gAreaHeight - 25;
+
+	//Determnar el valor máximo en el vector de valores
+	var largestVal = 0;
+	for(i=0; i < dataValue.length; i += 1){
+		if (dataValue[i] > largestVal){	largestVal = dataValue[i];	}
+	}
+
+	graph.fillStyle = '#F5D0A9';
+	graph.fillRect(0, 0, canId.width, canId.height);
+
+	var barHeight=0;
+	for(i=0; i < dataValue.length; i +=1){
+
+		ratio = dataValue[i] / largestVal;
+		barHeight = ratio * maxBarHeight;
+	
+		//Dibujar el fondo de cada barra (sombra)
+		// Sombras - Fondo
+	    graph.shadowOffsetX = 5;
+	    graph.shadowOffsetY = 2;
+	    graph.shadowBlur = 2;
+	    graph.shadowColor = "black";
+						
+	    // Fondo
+	    graph.fillStyle = "grey";			
+	    graph.fillRect(margin + i * canId.width / noBars, gAreaHeight - barHeight, barWidth, barHeight);
+
+	    // Sin sombras - Barras
+	    graph.shadowOffsetX = 0;
+	    graph.shadowOffsetY = 0;
+	    graph.shadowBlur = 0;
+
+	    //Barras
+	    graph.fillStyle = "blue";
+	    graph.fillRect(margin + i * canId.width / noBars + border,
+	      gAreaHeight - barHeight + border,
+	      barWidth - border * 2,
+	      barHeight - border * 2);
+
+	    //Rotular barras
+	    // Uso de try / catch para evitar error en IE 8
+	    graph.fillStyle = "#333";
+	    graph.font = "bold 12px sans-serif";
+	    graph.textAlign = "center";
+	    //Rotular los valores encima de las barras
+	    try {
+	      graph.fillText(parseFloat(dataValue[i],10),
+	        i * canId.width / noBars + (canId.width / noBars) / 2,
+	        gAreaHeight - barHeight - 10);
+	    } catch (ex) {}
+   		//Rotular las etiquetas de las barras
+		try {
+	    graph.fillText(dataName[i],
+	      i * canId.width / noBars + (canId.width / noBars) / 2,
+	      canId.height - 10);
+		} catch (ex) {}
+
+	}
+};
+</script>
+<p class="big"><u>ESTADISTICAS</u></p>
+    <div align="center"> 
+        <canvas id="canId" height="150" width="400">
+        </canvas>
+    </div>
+    <br/>
+    <table class="tab1">
+		<ul id="lis1">
+			<tr><td class="tabR1" width="20%">&bull; nºPreg:</td>
+				<td id="lis1">Número de Preguntas</td></tr>
+			<tr><td class="tabR1" width="20%">&bull; nºComen:</td> 
+				<td id="lis1">Número de Comentarios</td></tr>
+			<tr><td class="tabR1" width="20%">&bull; Com/Preg:</td> 
+				<td id="lis1">Número medio de Comentarios por Pregunta</td></tr>
+			<tr><td class="tabR1" width="20%">&bull; PregCC*:</td> 
+				<td id="lis1">Número de Preguntas CON Comentarios (*)con independencia de si están publicados o no</td></tr>
+			<tr><td class="tabR1" width="20%">&bull; PregSC:</td> 
+				<td id="lis1">Número de Preguntas SIN Comentarios</td></tr>
+		</ul>
+    </table>    
+  </body>

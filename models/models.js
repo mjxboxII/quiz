@@ -33,9 +33,9 @@ exports.Quiz = Quiz;  //exporta la definicion de la tabla Quiz
 //Importar la definición de la tabla Quiz en quiz.js
 var Comment = sequelize.import(path.join(__dirname, 'comment'));
 exports.Comment = Comment;  //exporta la definicion de la tabla Quiz
-
 Comment.belongsTo(Quiz);
-Quiz.hasMany(Comment);
+//modificado para que borre los comentarios al borrar pregunta
+Quiz.hasMany(Comment, {'onDelete': 'cascade'});
 
 //sequelize.sync() crea e inicializa tabla de preguntas en DB
 sequelize.sync().success(function(){

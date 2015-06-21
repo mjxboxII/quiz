@@ -3,6 +3,6 @@ body 					{ background: #999;}
 #page-wrap:after 		{ content: "Wide Layout"; }
 
 nav						{ float: left; width: 15%; height: 200px; }
-nav span				{ margin: 0px 100px 0px 0px; }
+nav span				{ margin: 0px 100px 0px 0px; text-align: left}
 section 				{ float: right; width: 80%; height: 200px; }
 footer					{ clear: both; display: block; }

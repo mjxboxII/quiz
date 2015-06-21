@@ -24,22 +24,27 @@
 <table width="100%" class="tab1">
 		<tr></tr>
 		<tr >	
-			<td class="tabR1" colspan="2"><strong>COMENTARIOS: </strong></td>
+			<td class="tabR2" colspan="2"><strong>COMENTARIOS: </strong></td>
 		</tr>
 		<tr>
-			<td class="tabR1">
-				<ul id="lis1">
 				<%for(index in quiz.comments) {%>
-					<%if (quiz.comments[index].publicado || session.user) {%>
-							<li><strong></strong><%=quiz.comments[index].texto%> 
-								<%if (session.user && !quiz.comments[index].publicado){%>
-									<a href="/quizes/<%=quiz.id%>/comments/<%=quiz.comments[index].id%>/publish"><button>Publicar</button></a>
+					<tr>
+					<%if (quiz.comments[index].publicado) {%>
+							<td><ul id="lis1">&bull; <%=quiz.comments[index].texto%></ul></td>  
+							<%if (session.user){%>
+								<td id="lis1"><form method="post" action="/quizes/<%= quiz.id %>/comments/<%=quiz.comments[index].id%>?_method=delete">
+									<button type="submit" onClick="return confirm('¿Desea eliminar el comentario: <%= quiz.comments[index].texto %> ?')">Eliminar</button>
+								</form></td>
+							<%} %>
+					<%} else { %>
+								<%if (session.user){%>
+									<td><ul id="lis1">&bull; <%=quiz.comments[index].texto%></ul></td>  
+									<td id="lis1"><form method="post" action="/quizes/<%= quiz.id %>/comments/<%=quiz.comments[index].id%>?_method=delete">
+										<button type="submit" onClick="return confirm('¿Desea eliminar el comentario: <%= quiz.comments[index].texto %> ?')">Eliminar</button></form></td> <td><a href="/quizes/<%=quiz.id%>/comments/<%=quiz.comments[index].id%>/publish"><button>Publicar</button></a></td>
 								<%} %>	
-							</li>
-						<%}%>
+							<%} %>	
+				</tr>
 				<%}%>
-				</ul>
-			</td>
 		</tr>
 </table>
 	

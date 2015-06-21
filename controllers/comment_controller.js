@@ -41,9 +41,18 @@ exports.create = function(req, res){
 
 };
 
+// GET /quizes/:quizId/comments/:commentId/publish
 exports.publish = function(req, res) {
 	req.comment.publicado = true;
 	req.comment.save({fields: ['publicado']}).then(
 			function(){ res.redirect('/quizes/'+req.params.quizId);}
-		).catch( function(error){ next(error)});
+		).catch( function(error){ next(error) });
+};
+
+// DELETE /quizes/:quizId/comments/:commentId
+exports.destroy = function(req, res) { 
+	req.comment.destroy().then( 
+			function() { delete req.comment;
+					 	 res.redirect('/quizes/'+req.quiz.id);}
+		).catch(function(error) { next(error) });
 };

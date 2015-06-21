@@ -1,13 +1,13 @@
 * 						{ margin: 0; padding: 0; }
 body 					{ font: 16px Georgia, serif;}
 
-#page-wrap 				{ margin: 2% auto; color: white; }
+#page-wrap 				{ margin: auto; color: white; }
 #page-wrap > .main 		{ border: 1px solid #999; padding: 1%;
 						 margin-bottom: 1px; color: black; }
-section > div 			{ padding: 20px; }
+section > div 			{ padding: 20px; margin-top: 0px;}
 header, nav, section 	{ background: #eee; text-align: center; }
 footer					{ background: #eee; text-align: center; }
-nav span				{ margin: 0px 10px 0px 10px; }
+nav span				{ margin: 0px 10px 0px 10px; text-align: left;}
 
 #autor	> p				{ margin: 0.6em auto 0.6em auto; text-align: center;}
 #ErrorMsg				{ color: #f61; font-size: smaller}
@@ -15,8 +15,11 @@ nav span				{ margin: 0px 10px 0px 10px; }
 						  background-color: #A9D0F5;
 						  margin: 0.3em auto auto auto;
 						  opacity: 0.7}
-.tabR1					{ text-align: left; padding: 0.3em;}
-#lis1					{ margin-left: 25px; text-align: left;}
+.tabR1					{ text-align: left; padding: 0.3em; font: bold 14px Helvetica;}
+.tabR2					{ text-align: left; padding: 0.3em;}
+#lis1					{ text-align: left; margin-top: 0.2em; font-size: 15px; padding: 0.2em;}
 .right					{ float: right;}
 .field					{ text-align: center; margin-top: 0.4em;}
 .actions				{ margin-top: 0.5em;}
+.big					{ text-align: center; font: bold 17px Arial;
+						  margin-bottom: 2px;}

@@ -27,6 +27,8 @@ exports.load = function (req, res, next, quizId) {
 //GET /quizes ** modulo 7
 exports.index= function(req, res){
 
+	req.session.redir = req.url; //PM1: guarda ruta cuando está en indice de preguntas
+
 	if (req.query.orige==1) { //Viene de busqueda
 			if(req.query.b_opt=="preg"){ //busqueda por preg	
 				var cadena = "%" + req.query.search1.replace(/[ ]+/g,"%") + "%";

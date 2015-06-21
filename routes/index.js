@@ -2,11 +2,10 @@ var express = require('express');
 var router = express.Router();
 
 //paso4: primera pagina
-var quizController = require('../controllers/quiz_controller');
-//*** modulo 9
-var commentController = require('../controllers/comment_controller');
-//*** modulo 9
-var sessionController = require('../controllers/session_controller');
+var quizController 		= require('../controllers/quiz_controller');
+var commentController 	= require('../controllers/comment_controller'); //*** mod 9
+var sessionController 	= require('../controllers/session_controller');
+var statsController 	= require('../controllers/stats_controller');
 
 /* GET home page. */
 router.get('/', function(req, res) {
@@ -31,12 +30,15 @@ router.delete('/quizes/:quizId(\\d+)', 		sessionController.loginRequired, quizCo
 router.get('/quizes/:quizId(\\d+)/comments/new', commentController.new);
 router.post('/quizes/:quizId(\\d+)/comments', 	 commentController.create);
 router.get('/quizes/:quizId(\\d+)/comments/:commentId(\\d+)/publish', 	 sessionController.loginRequired, commentController.publish);
+router.delete('/quizes/:quizId(\\d+)/comments/:commentId(\\d+)', sessionController.loginRequired, commentController.destroy);
 
 //Definicion de rutas de sesion *** modulo 9
 router.get('/login',					sessionController.new); //formulario login
 router.post('/login', 					sessionController.create); //crear sesion
 router.get('/logout',					sessionController.destroy); //destruir sesion ->>DEBERÍA ser DELETE
 
+//Estadísticas *** modulo 9
+router.get('/quizes/statistics', 		statsController.analyze);
 
 router.get('/author', function(req, res) {
   res.render('author', {errors: []});

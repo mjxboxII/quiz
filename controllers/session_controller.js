@@ -1,15 +1,18 @@
 //*** modulo 9
 //MW autorización de accesos HTTP restringidos
+
 exports.loginRequired = function(req, res, next){
+	
 	if(req.session.user) {
-		next();
+		next(); 
 	} else {
 		res.redirect('/login');
 	}
 };
 
 //GET /login
-exports.new = function(req, res){
+exports.new = function(req, res){//exports.new = function(req, res, p_ruta){
+
 	var errors = req.session.errors || {};
 	req.session.errors = {};
 
@@ -18,6 +21,7 @@ exports.new = function(req, res){
 
 //POST /login
 exports.create = function(req, res){
+	
 	var login 		= req.body.login;
 	var password 	= req.body.password;
 
@@ -35,7 +39,7 @@ exports.create = function(req, res){
 		//*** modulo 9 autologout
 		var now = new Date();
 		var nowSecs = (now.getMinutes()*60) + now.getSeconds();
-	
+
 		req.session.user = { id: user.id, username: user.username, doTime : nowSecs };
 		res.redirect(req.session.redir.toString()); //redirección a path anterior a login
 	});
@@ -44,5 +48,5 @@ exports.create = function(req, res){
 //DELETE /logout --Destruir sesion
 exports.destroy = function(req, res){
 	delete req.session.user;
-	res.redirect(req.session.redir.toString()); //redirect a patha anterior a login
+	res.redirect(req.session.redir.toString()); //redirect a path anterior a login
 };
