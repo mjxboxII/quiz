@@ -96,8 +96,8 @@ exports.create = function(req, res){
 		res.render('quizes/new', {quiz: quiz, errors: errores, proc:0});
 	} else {
 			//guarda en DB los campos pregunta y respuesta de quiz
-		quiz.save({fields: ["pregunta", "respuesta", "tematica"]}).then(function(){
-		res.redirect('/quizes')}) //Redireccion HTTP (URL relativo) lista de preguntas
+			quiz.save({fields: ["pregunta", "respuesta", "tematica"]}).then(function(){
+							res.redirect('/quizes')}) //Redireccion HTTP (URL relativo) lista de preguntas
 	}
 
 };
@@ -125,12 +125,12 @@ exports.update = function(req, res){
 		res.render('quizes/edit', {quiz: req.quiz, errors: errores, proc:1});
 	} else {
 			//guarda en DB los campos pregunta y respuesta de quiz
-		req.quiz.save({fields: ["pregunta", "respuesta", "tematica"]}).then(function(){
-		res.redirect('/quizes')}) //Redireccion HTTP (URL relativo) lista de preguntas
+				req.quiz.save({fields: ["pregunta", "respuesta", "tematica"]}).then(function(){
+						res.redirect('/quizes')}) //Redireccion HTTP (URL relativo) lista de preguntas
 	}
 };
 
 //DELETE /quizes/:id
 exports.destroy = function(req, res){
-	req.quiz.destroy().then(function(){ res.redirect('/quizes');}).catch(function(error){ next(error) });
+			req.quiz.destroy().then(function(){ res.redirect('/quizes');}).catch(function(error){ next(error) });
 };
