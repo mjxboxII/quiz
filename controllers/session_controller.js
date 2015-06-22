@@ -89,11 +89,7 @@ exports.destroy = function(req, res){
 	delete req.session.user;
 	//viene de llamar a post de crear/editar pregunta
 	if ((req.session.redir.match(/\/quizes\/new/)) || (req.session.redir.match(/\/quizes\/\d+\/edit/))){  
-<<<<<<< HEAD
 			//console.log('DE CREAR PREGUNTA o de EDITAR PREGUNTA');
-=======
-			console.log('DE CREAR PREGUNTA o de EDITAR PREGUNTA');
->>>>>>> 2ea4648f650f187a30aded107a01132af0aa7ee2
 			res.redirect('/quizes');  //redirige a creación de pregunta
 		} else {
 			res.redirect(req.session.redir.toString()); 
