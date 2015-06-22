@@ -32,14 +32,14 @@
 					<%if (quiz.comments[index].publicado) {%>
 							<td><ul id="lis1">&bull; <%=quiz.comments[index].texto%></ul></td>  
 							<%if (session.user){%>
-								<td id="lis1"><form method="post" action="/quizes/<%= quiz.id %>/comments/<%=quiz.comments[index].id%>?_method=delete">
+								<td id="lis1"><form method="post" action="/quizes/S<%= quiz.id %>/comments/<%=quiz.comments[index].id%>?_method=delete">
 									<button type="submit" onClick="return confirm('¿Desea eliminar el comentario: <%= quiz.comments[index].texto %> ?')">Eliminar</button>
 								</form></td>
 							<%} %>
 					<%} else { %>
 								<%if (session.user){%>
 									<td><ul id="lis1">&bull; <%=quiz.comments[index].texto%></ul></td>  
-									<td id="lis1"><form method="post" action="/quizes/<%= quiz.id %>/comments/<%=quiz.comments[index].id%>?_method=delete">
+									<td id="lis1"><form method="post" action="/quizes/S<%= quiz.id %>/comments/<%=quiz.comments[index].id%>?_method=delete">
 										<button type="submit" onClick="return confirm('¿Desea eliminar el comentario: <%= quiz.comments[index].texto %> ?')">Eliminar</button></form></td> <td><a href="/quizes/<%=quiz.id%>/comments/<%=quiz.comments[index].id%>/publish"><button>Publicar</button></a></td>
 								<%} %>	
 							<%} %>	

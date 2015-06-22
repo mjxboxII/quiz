@@ -36,7 +36,7 @@ exports.create = function(req, res){
 	} else {
 			//guarda en DB los campos pregunta y respuesta de quiz
 		comment.save().then(function(){
-		res.redirect('/quizes/' + req.params.quizId)}) //Redireccion HTTP (URL relativo) lista de preguntas
+		res.redirect('/quizes/S' + req.params.quizId)}) //Redireccion HTTP (URL relativo) lista de preguntas
 	}
 
 };
@@ -45,7 +45,7 @@ exports.create = function(req, res){
 exports.publish = function(req, res) {
 	req.comment.publicado = true;
 	req.comment.save({fields: ['publicado']}).then(
-			function(){ res.redirect('/quizes/'+req.params.quizId);}
+			function(){ res.redirect('/quizes/S'+req.params.quizId);}
 		).catch( function(error){ next(error) });
 };
 
@@ -53,6 +53,6 @@ exports.publish = function(req, res) {
 exports.destroy = function(req, res) { 
 	req.comment.destroy().then( 
 			function() { delete req.comment;
-					 	 res.redirect('/quizes/'+req.quiz.id);}
+					 	 res.redirect('/quizes/S'+req.quiz.id);}
 		).catch(function(error) { next(error) });
 };

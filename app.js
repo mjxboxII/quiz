@@ -1,17 +1,17 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var partials = require('express-partials');
+var express         = require('express');
+var path            = require('path');
+var favicon         = require('serve-favicon');
+var logger          = require('morgan');
+var cookieParser    = require('cookie-parser');
+var bodyParser      = require('body-parser');
+var partials        = require('express-partials');
 //*** modulo 8
-var methodOverride = require('method-override');
+var methodOverride  = require('method-override');
 //*** modulo 9
-var session = require('express-session');
-var routes = require('./routes/index');
+var session         = require('express-session');
+var routes          = require('./routes/index');
 
-var app = express();
+var app             = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -27,25 +27,8 @@ app.use(partials());
 //** modulo 8
 app.use(methodOverride('_method'));
 //*** mod 9
-app.use(cookieParser()); //semilla para cifrar cookie
-app.use(session({ secret: 'mysecret'}));
-
-//Helpers dinamicos: ***modulo 9
-app.use(function(req, res, next){
-
-  // si no existe lo inicializa
-    if (!req.session.redir) {
-        req.session.redir = '/';
-     }
-
-
-    if (!req.path.match(/\/login|\/logout|\/user/)){
-        req.session.redir = req.path 
-    }
-    //Hacer visible req.session en las vistas
-    res.locals.session = req.session;
-    next();
-});
+app.use(cookieParser('mycookie')); //semilla para cifrar cookie
+app.use(session({ secret: 'mysecret', tsesion : 0.0}));
 
 //MW auto-logout *** modulo 9
 app.use(function(req, res, next) {
@@ -65,6 +48,23 @@ app.use(function(req, res, next) {
     }
     next();
 });
+
+//Helpers dinamicos: ***modulo 9
+app.use(function(req, res, next){
+
+  // si no existe lo inicializa
+   /* if (!req.session.redir) {
+        req.session.redir = '/';
+     }*/
+
+    if (!req.path.match(/\/login|\/logout/)){
+        req.session.redir = req.path 
+    }
+    //Hacer visible req.session en las vistas
+    res.locals.session = req.session;
+    next();
+});
+
 
 app.use('/', routes);
 

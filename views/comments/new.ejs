@@ -1,13 +1,14 @@
 Añadir comentario: <p><br>
 
-<form method="post" action="/quizes/<%=quizid%>/comments/">
+<form method="post" action="/quizes/<%=quizid%>/comments">
+<input type="hidden" id="proc" value="3">
 <table width="100%">
 	<tr>
 		<td style="text-align:center"><input type="text" id="comment" name="comment[texto]" value="Añada aquí su comentario" onfocus="this.value=''" overflow:auto /></td>
 	</tr>
 	<tr><td>    </td></tr>
 	<tr>
-		<td style="text-align:center"><button type="Submit">Añadir</button> <button type="cancel" onclick="window.location='/quizes/<%=quizid%>';return false;">Cancelar</button></td>
+		<td style="text-align:center"><button type="Submit">Añadir</button> <button type="cancel" onclick="window.location='/quizes/S<%=quizid%>';return false;">Cancelar</button></td>
 	</tr>
 </table>	
 </form>
