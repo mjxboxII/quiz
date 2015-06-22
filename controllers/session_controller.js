@@ -58,18 +58,25 @@ exports.create = function(req, res){
 						var mydir = req.session.redir.toString(); 
 						res.redirect(mydir); 
 				} else {
-					if (req.session.redir.match(/\/quizes\/\d+/)){ //viene de hacer un post de editar pregunta
+					if (req.session.redir.match(/\/quizes\/\d+\/edit/)){ //viene de hacer un post de editar pregunta
+							//console.log('DE EDITAR PREGUNTA');
+							var mydir = req.session.redir.toString();
+							res.redirect(mydir);
+
+					} else { 
+						if (req.session.redir.match(/\/quizes\/\d+/)){ //viene de hacer un post de editar pregunta
 							//console.log('DE EDITAR PREGUNTA');
 							var mydir = req.session.redir.toString() + '/edit'
 							res.redirect(mydir);
-
-					} else {    
-						if(req.session.redir.match(/\/quizes\/D\d+/)){   //viene de borrar pregunta
-							res.redirect('/quizes');
 						} else {
-							//console.log('DE CUALQUIER OTRO LADO');
-							res.redirect(req.session.redir.toString());
-						}
+
+							if(req.session.redir.match(/\/quizes\/D\d+/)){   //viene de borrar pregunta
+							res.redirect('/quizes');
+							} else {
+								//console.log('DE CUALQUIER OTRO LADO');
+								res.redirect(req.session.redir.toString());
+							}
+						}	
 					}			
 				}				
 			}
@@ -82,7 +89,7 @@ exports.destroy = function(req, res){
 	delete req.session.user;
 	//viene de llamar a post de crear/editar pregunta
 	if ((req.session.redir.match(/\/quizes\/new/)) || (req.session.redir.match(/\/quizes\/\d+\/edit/))){  
-			//console.log('DE CREAR PREGUNTA');
+			console.log('DE CREAR PREGUNTA o de EDITAR PREGUNTA');
 			res.redirect('/quizes');  //redirige a creación de pregunta
 		} else {
 			res.redirect(req.session.redir.toString()); 
